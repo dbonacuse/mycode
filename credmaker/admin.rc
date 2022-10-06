@@ -1,0 +1,7 @@
+export OS_AUTH_URL=llll
+export OS_IDENTITY_API_VERSION=3
+export OS_PROJECT_NAME=k
+export OS_PROJECT_DOMAIN_NAME=mmm
+export OS_USERNAME=j
+export OS_USER_DOMAIN_NAME=jd
+export OS_PASSWORD=ooo
