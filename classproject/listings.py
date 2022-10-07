@@ -40,7 +40,7 @@ for currency in data:
 
     rank_str = str(rank)
     price_str = local_symbol + f'{price:,}'
-    percent_change_24h_str = local_symbol + f'{percent_change_24h:,}'
+    percent_change_24h_str = '%' + f'{percent_change_24h:,}'
     market_cap_str = local_symbol + f'{market_cap:,}'
 
     print('Coinmarketcap Rank: ' + rank_str)
