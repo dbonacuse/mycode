@@ -22,7 +22,7 @@ request = requests.get(global_url, headers=headers)
 # cmc has sent us global metrics, now sorting data w json
 results = request.json()
 
-print(json.dumps(results, sort_keys = True, indent = 4))
+# print(json.dumps(results, sort_keys = True, indent = 4))
 
 data = results["data"]
 
@@ -36,14 +36,17 @@ btc_dominance = str(round(btc_dominance, 2))+ '%'
 eth_dominance = str(round(eth_dominance, 2))+ '%'
 
 tmc_rounded = (round(total_market_cap, 2))
-total_market_cap = '$' + f'{tmc_rounded:,}'
+total_market_cap = local_symbol + f'{tmc_rounded:,}'
 
-total_volume_24h = '$' + f'{total_volume_24h:,}'
+total_volume_24h = local_symbol + f'{total_volume_24h:,}'
 
-print(btc_dominance)
-print(eth_dominance)
-print(total_market_cap)
-print(total_volume_24h)
+print()
+print("The global market cap for all cryptocurrencies is " + total_market_cap +
+" and the global 24 hour volume is " + total_volume_24h + ".")
+print()
+print("Bitcoin makes up " + btc_dominance + " of the total crypto market cap " +
+"and Ethereum makes up " + eth_dominance + ".")
+print()
 
 
 
