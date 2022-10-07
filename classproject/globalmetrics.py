@@ -31,21 +31,21 @@ eth_dominance = data["eth_dominance"]
 total_market_cap = data["quote"][local_currency]["total_market_cap"]
 total_volume_24h = data["quote"][local_currency]["total_volume_24h"]
 
-btc_dominance = str(round(btc_dominance, 2))+ '%'
+btc_dominance_str = str(round(btc_dominance, 2))+ '%'
 
-eth_dominance = str(round(eth_dominance, 2))+ '%'
+eth_dominance_str = str(round(eth_dominance, 2))+ '%'
 
 tmc_rounded = (round(total_market_cap, 2))
-total_market_cap = local_symbol + f'{tmc_rounded:,}'
+total_market_cap_str = local_symbol + f'{tmc_rounded:,}'
 
-total_volume_24h = local_symbol + f'{total_volume_24h:,}'
+total_volume_24h_str = local_symbol + f'{total_volume_24h:,}'
 
 print()
-print("The global market cap for all cryptocurrencies is " + total_market_cap +
-" and the global 24 hour volume is " + total_volume_24h + ".")
+print("The global market cap for all cryptocurrencies is " + total_market_cap_str +
+" and the global 24 hour volume is " + total_volume_24h_str + ".")
 print()
-print("Bitcoin makes up " + btc_dominance + " of the total crypto market cap " +
-"and Ethereum makes up " + eth_dominance + ".")
+print("Bitcoin makes up " + btc_dominance_str + " of the total crypto market cap " +
+"and Ethereum makes up " + eth_dominance_str + ".")
 print()
 
 
