@@ -13,7 +13,7 @@ from pyfiglet import figlet_format
 
 # ASCII Art
 init(strip=not sys.stdout.isatty())  # strip colors if stdout is redirected
-cprint(figlet_format('crypto    guru', font='starwars'),
+cprint(figlet_format('coin    guru', font='starwars'),
        'white', 'on_blue', attrs=['bold'])
 
 # Set variables to call later
@@ -31,23 +31,28 @@ BASE_URL = 'https://pro-api.coinmarketcap.com'
 
 # Main function
 def main():
-
+    """
+    Take user input to sort top cryptocurrencies
+    using various metrics
+    """
     while True:
 
-        # Menu for Coinalysis
+        # Menu for CoinGuru
         # Different options to sort by descendning market cap,
         # percent price change and trading volume in the last day
         print()
-        print("CoinMarketCap Explorer Menu\n")
+        print("CoinGuru Explorer Menu\n")
         print("Please make a choice from the following menu on how you would " +
         "like to sort the top 100 cryptocurrencies\n")
         print("1 - Top 100 sorted by market cap")
         print("2 - Top 100 sorted by 24 hour price percentage change")
         print("3 - Top 100 sorted by 24 hour trading volume")
+        print("4 - Top 100 sorted by circulating supply")
+        print("5 - Top 100 sorted by maximum supply")
         print("0 - Exit\n")
 
         # collect user input for how they'd like to sort
-        choice = input("What is your choice (1-3): ")
+        choice = input("What is your choice (1-5): ")
 
         sort = ""
 
@@ -58,13 +63,17 @@ def main():
             sort = 'percent_change_24h'
         elif choice == '3':
             sort = 'volume_24h'
+        elif choice == '4':
+            sort = 'circulating_supply'
+        elif choice == '5':
+            sort = 'max_supply'
         elif choice == '0':
             sys.exit(0)
         else:
             print("Please enter a valid number.\n")
-            time.sleep(2)
+            time.sleep(1)
             continue
-           
+
         # concatenating Base URL with URL for listings/price quotes and sorting
         quote_url = BASE_URL + '/v1/cryptocurrency/listings/latest?convert=' + \
             LOCAL_CURRENCY + '&sort=' + sort
@@ -80,15 +89,19 @@ def main():
 
         # Calling prettytable and setting the columns in the table
         table = PrettyTable(
-            ['Rank', 'Asset', 'Price', 'Market Cap', 'Volume', '1h', '24hr', '7d'])
+            ['Market Cap Rank', 'Asset', 'Price', 'Market Cap', 'Volume',
+             '1h', '24hr', '7d', 'Circulating Supply', 'Max Supply'])
 
-        # For the currencies/assets in data, currency name is 'name', symbol (or ticker) is 'local_symbol
+        # For the currencies/assets in data, currency name is 'name',
+        # symbol (or ticker) is 'symbol'
         # and rank is 'cmc_rank'
         print()
         for currency in data:
             name = currency['name']
             symbol = currency['symbol']
             rank = currency['cmc_rank']
+            circ_supply = currency['circulating_supply']
+            max_supply = currency['max_supply']
 
             # Declaring quote variable to simplify the logic tree
             quote = currency['quote'][LOCAL_CURRENCY]
@@ -144,6 +157,14 @@ def main():
             if market_cap is not None:
                 market_cap_str = '{:,}'.format(round(market_cap, 2))
 
+            # Formatting circulating supply
+            if circ_supply is not None:
+                circ_supply_str = '{:,}'.format(round(circ_supply, 2))
+
+            # Formatting max supply
+            if max_supply is not None:
+                max_supply_str = '{:,}'.format(round(max_supply, 2))
+
             # Rounding and formatting price data as well
             price_str = '{:,}'.format(round(price, 2))
 
@@ -155,7 +176,9 @@ def main():
                            LOCAL_SYMBOL + volume_str,
                            str(hour_change),
                            str(day_change),
-                           str(week_change)])
+                           str(week_change),
+                           circ_supply_str,
+                           max_supply_str])
 
         # printing table
         print()
